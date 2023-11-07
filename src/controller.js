@@ -3,9 +3,7 @@ import NotFoundException from './shared/exceptions/not-found.exception.js';
 
 export default class Controller {
   static async getImage(req, res) {
-    const { key } = req.query;
-
-    console.log(key);
+    const { key, contentType } = req.query;
 
     const exists = await imageExists(key);
 
@@ -15,7 +13,7 @@ export default class Controller {
     const image = Buffer.from(encodedImage, 'base64');
 
     res.writeHead(200, {
-      'Content-Type': 'image/png',
+      'Content-Type': contentType || 'image/png',
       'Content-Length': image.length,
     });
 
