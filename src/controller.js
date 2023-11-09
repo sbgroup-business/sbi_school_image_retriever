@@ -14,6 +14,7 @@ export default class Controller {
 
     res.writeHead(200, {
       'Content-Type': contentType || 'image/png',
+      'Content-Disposition': 'inline',
       'Content-Length': image.length,
     });
 
