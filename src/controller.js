@@ -37,7 +37,7 @@ export default class Controller {
       Number(y1),
       Number(x2),
       Number(y2),
-      120
+      size ? Number(size) : 50
     );
 
     res.writeHead(200, {

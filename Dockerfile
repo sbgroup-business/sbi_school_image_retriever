@@ -1,13 +1,14 @@
-FROM node:lts AS  base
+FROM node:lts AS base
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+RUN corepack enable && yarn set version stable
 
+COPY package.json yarn.lock .yarnrc.yml ./
 
 FROM base AS dev
 
-RUN yarn install && yarn cache clean
+RUN yarn install
 
 COPY . .
 
@@ -15,7 +16,7 @@ CMD ["node", "src/app"]
 
 FROM base AS prod
 
-RUN yarn install --production && yarn cache clean
+RUN yarn install --production
 
 COPY . .
 
