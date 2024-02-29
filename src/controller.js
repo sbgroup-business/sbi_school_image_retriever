@@ -37,7 +37,7 @@ export default class Controller {
       Number(y1),
       Number(x2),
       Number(y2),
-      size ? Number(size) : 50
+      size ? Number(size) : +process.env.FACE_WIDTH
     );
 
     res.writeHead(200, {

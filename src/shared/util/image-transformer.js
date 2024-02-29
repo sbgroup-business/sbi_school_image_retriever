@@ -6,7 +6,7 @@ export default async function resizeImage(
   y1,
   x2,
   y2,
-  size = 50
+  size = +process.env.FACE_WIDTH
 ) {
   const width = x2 - x1;
   const height = y2 - y1;
