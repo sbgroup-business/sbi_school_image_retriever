@@ -3,18 +3,13 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: [
-    'airbnb-base',
-    'prettier'
-  ],
+  extends: ['airbnb-base', 'prettier'],
   overrides: [
     {
       env: {
         node: true,
       },
-      files: [
-        '.eslintrc.{js,cjs}',
-      ],
+      files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
         sourceType: 'script',
       },
@@ -27,6 +22,7 @@ module.exports = {
   rules: {
     'import/extensions': 'off',
     'no-console': 'off',
-    'no-unused-vars': 'off'
+    'no-unused-vars': 'off',
+    'import/prefer-default-export': 'off',
   },
 };

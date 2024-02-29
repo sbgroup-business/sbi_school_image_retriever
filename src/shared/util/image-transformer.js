@@ -6,7 +6,7 @@ export default async function resizeImage(
   y1,
   x2,
   y2,
-  size = +process.env.FACE_WIDTH
+  faceWidth
 ) {
   const width = x2 - x1;
   const height = y2 - y1;
@@ -15,6 +15,6 @@ export default async function resizeImage(
 
   return image
     .extract({ left: x1, top: y1, width, height })
-    .resize({ width: size })
+    .resize({ width: faceWidth })
     .toBuffer();
 }

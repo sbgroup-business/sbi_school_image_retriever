@@ -1,8 +1,5 @@
-import {
-  GetObjectCommand,
-  HeadObjectCommand,
-  S3Client,
-} from '@aws-sdk/client-s3';
+import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import APIException from '../exceptions/api-exception.js';
 
 const client = new S3Client({
   credentials: {
@@ -12,32 +9,20 @@ const client = new S3Client({
   region: process.env.REGION,
 });
 
-export async function imageExists(path) {
-  const command = new HeadObjectCommand({
-    Bucket: process.env.BUCKET,
-    Key: path,
-  });
-
-  try {
-    await client.send(command);
-
-    return true;
-  } catch (error) {
-    if (error.$metadata.httpStatusCode === 404) {
-      return false;
-    }
-
-    return false;
-  }
-}
-
 export async function getImage(path) {
-  const command = new GetObjectCommand({
-    Bucket: process.env.BUCKET,
-    Key: path,
-  });
+  try {
+    const command = new GetObjectCommand({
+      Bucket: process.env.BUCKET,
+      Key: path,
+    });
 
-  const response = await client.send(command);
+    const response = await client.send(command);
 
-  return response.Body.transformToString('base64');
+    return response.Body.transformToString('base64');
+  } catch (error) {
+    throw new APIException(
+      'Error getting image',
+      error.$metadata.httpStatusCode || 500
+    );
+  }
 }
