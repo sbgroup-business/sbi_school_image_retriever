@@ -1,4 +1,4 @@
-import { getImage } from './shared/network/s3.js';
+import { getImage, listSubdirectoriesInDirectory } from './shared/network/s3.js';
 import resizeImage from './shared/util/image-transformer.js';
 
 export default class Controller {
@@ -55,5 +55,13 @@ export default class Controller {
     });
 
     res.end(image);
+  }
+
+  static async getSubdirs(req, res) {
+    const { key, bucket } = req.query;
+
+    const subdirs = await listSubdirectoriesInDirectory(key, bucket);
+
+    return res.status(200).json(subdirs);
   }
 }

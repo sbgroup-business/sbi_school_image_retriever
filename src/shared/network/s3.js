@@ -1,4 +1,4 @@
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
 import APIException from '../exceptions/api-exception.js';
 
 const client = new S3Client({
@@ -8,6 +8,22 @@ const client = new S3Client({
   },
   region: process.env.REGION,
 });
+
+export async function listSubdirectoriesInDirectory(path, bucket = process.env.BUCKET) {
+  const command = new ListObjectsV2Command({
+    Bucket: bucket,
+    Prefix: path,
+    Delimiter: '/'
+  });
+
+  const response = await client.send(command);
+
+  if(!response.CommonPrefixes) {
+    throw new APIException('No subdirs found.', 404);
+  }
+
+  return response.CommonPrefixes.map((prefix) => prefix.Prefix.replace(path, ''));  
+}
 
 export async function getImage(path) {
   try {

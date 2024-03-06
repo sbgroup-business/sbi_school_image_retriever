@@ -12,4 +12,6 @@ router.get('/resized', controller.getResizedImage);
 
 router.get('/download', controller.downloadImage);
 
+router.get('/subdirs', controller.getSubdirs);
+
 export default router;
