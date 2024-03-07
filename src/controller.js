@@ -20,8 +20,6 @@ export default class Controller {
   static async getResizedImage(req, res) {
     const { key, x1, y1, x2, y2, face_width: faceWidth, zoom } = req.query;
 
-    
-
     const encodedImage = await getImage(key);
     const image = Buffer.from(encodedImage, 'base64');
     const resizedImage = await resizeImage(
