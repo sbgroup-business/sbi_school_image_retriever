@@ -2,13 +2,13 @@ FROM node:lts AS base
 
 WORKDIR /usr/src/app
 
-RUN corepack enable && yarn set version stable
+RUN npm install -g pnpm
 
 COPY package.json ./
 
 FROM base AS dev
 
-RUN yarn install
+RUN pnpm install
 
 COPY . .
 
@@ -16,7 +16,7 @@ CMD ["node", "src/app"]
 
 FROM base AS prod
 
-RUN yarn install --production
+RUN pnpm install
 
 COPY . .
 

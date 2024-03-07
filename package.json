@@ -29,5 +29,5 @@
     "eslint-plugin-import": "^2.25.2",
     "prettier": "^3.0.3"
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.1.1"
 }
