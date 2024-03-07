@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 RUN corepack enable && yarn set version stable
 
-COPY package.json yarn.lock .yarnrc.yml ./
+COPY package.json ./
 
 FROM base AS dev
 

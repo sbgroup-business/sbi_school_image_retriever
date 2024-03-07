@@ -1,2 +1,5 @@
 node_modules/
-.prod.env/
+.prod.env
+.yarn
+.yarnrc
+.yarnrc.yml
