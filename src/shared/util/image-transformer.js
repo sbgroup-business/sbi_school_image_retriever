@@ -22,7 +22,13 @@ export default async function resizeImage(
   const zoomedY2 = Math.min(Math.floor(y2 + height * zoom), originalHeight);
 
   return image
-    .extract({ left: zoomedX1, top: zoomedY1, width: zoomedX2 - zoomedX1, height: zoomedY2 - zoomedY1 })
+    .rotate()
+    .extract({
+      left: zoomedX1,
+      top: zoomedY1,
+      width: zoomedX2 - zoomedX1,
+      height: zoomedY2 - zoomedY1,
+    })
     .resize({ width: faceWidth })
     .toBuffer();
 }
