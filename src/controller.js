@@ -1,4 +1,7 @@
-import { getImage, listSubdirectoriesInDirectory } from './shared/network/s3.js';
+import {
+  getImage,
+  listSubdirectoriesInDirectory,
+} from './shared/network/s3.js';
 import resizeImage from './shared/util/image-transformer.js';
 
 export default class Controller {
@@ -22,23 +25,32 @@ export default class Controller {
 
     const encodedImage = await getImage(key);
     const image = Buffer.from(encodedImage, 'base64');
-    const resizedImage = await resizeImage(
-      image,
-      Number(x1),
-      Number(y1),
-      Number(x2),
-      Number(y2),
-      Number(zoom || 0),
-      Number(faceWidth) || +process.env.FACE_WIDTH,
-    );
 
-    res.writeHead(200, {
-      'Content-Type': 'image/png',
-      'Content-Disposition': 'inline',
-      'Content-Length': resizedImage.length,
-    });
+    try {
+      const resizedImage = await resizeImage(
+        image,
+        Number(x1),
+        Number(y1),
+        Number(x2),
+        Number(y2),
+        Number(zoom || 0),
+        Number(faceWidth) || +process.env.FACE_WIDTH
+      );
 
-    res.end(resizedImage);
+      res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Disposition': 'inline',
+        'Content-Length': resizedImage.length,
+      });
+
+      res.end(resizedImage);
+    } catch (error) {
+      res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': image.length,
+      });
+      res.end(image);
+    }
   }
 
   static async downloadImage(req, res) {
