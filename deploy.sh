@@ -6,10 +6,10 @@ deploy_dev() {
 }
 
 deploy_prod() {
-  aws ecr get-login-password --region sa-east-1 --profile prdProfile | docker login --username AWS --password-stdin 211292617813.dkr.ecr.sa-east-1.amazonaws.com
+  aws ecr get-login-password --region us-east-1 --profile prdProfile | docker login --username AWS --password-stdin 211292617813.dkr.ecr.us-east-1.amazonaws.com
   docker build --no-cache  -f Dockerfile --target prod -t image-retriever .
-  docker tag image-retriever:latest 211292617813.dkr.ecr.sa-east-1.amazonaws.com/image-retriever:latest
-  docker push 211292617813.dkr.ecr.sa-east-1.amazonaws.com/image-retriever:latest
+  docker tag image-retriever:latest 211292617813.dkr.ecr.us-east-1.amazonaws.com/image-retriever:latest
+  docker push 211292617813.dkr.ecr.us-east-1.amazonaws.com/image-retriever:latest
 }
 
 if [ $# -ne 1 ]; then
